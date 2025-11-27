@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Plus, Search, Mail, User, Building } from "lucide-react";
+import { Plus, Search, Mail, User, Building, Loader2 } from "lucide-react";
 import { Contact } from "@/types";
 import { getContacts, getContactsByFolder } from "@/lib/storage";
 
-export default function Dashboard() {
+function DashboardContent() {
     const searchParams = useSearchParams();
     const folderId = searchParams.get("folderId");
     const [contacts, setContacts] = useState<Contact[]>([]);
@@ -95,5 +95,13 @@ export default function Dashboard() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function Dashboard() {
+    return (
+        <Suspense fallback={<div className="flex justify-center p-8"><Loader2 className="animate-spin text-slate-500" /></div>}>
+            <DashboardContent />
+        </Suspense>
     );
 }
