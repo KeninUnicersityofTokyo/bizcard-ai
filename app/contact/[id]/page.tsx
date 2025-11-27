@@ -50,14 +50,14 @@ export default function ContactDetailPage({ params }: { params: { id: string } }
         <div className="max-w-3xl mx-auto">
             <header className="mb-8 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <Link href="/" className="p-2 hover:bg-slate-800 rounded-full transition-colors">
-                        <ArrowLeft className="w-6 h-6 text-slate-400" />
+                    <Link href="/" className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                        <ArrowLeft className="w-6 h-6 text-slate-500" />
                     </Link>
-                    <h1 className="text-2xl font-bold text-slate-100">{contact.name}</h1>
+                    <h1 className="text-2xl font-bold text-slate-800">{contact.name}</h1>
                 </div>
                 <button
                     onClick={handleDelete}
-                    className="p-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-colors"
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                 >
                     <Trash2 className="w-5 h-5" />
                 </button>
@@ -66,29 +66,29 @@ export default function ContactDetailPage({ params }: { params: { id: string } }
             <div className="grid gap-6 md:grid-cols-3">
                 {/* Main Info */}
                 <div className="md:col-span-2 space-y-6">
-                    <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 space-y-4">
-                        <div className="flex items-center gap-3 text-slate-300">
-                            <Building className="w-5 h-5 text-slate-500" />
+                    <div className="bg-white rounded-xl p-6 border border-slate-200 space-y-4 shadow-sm">
+                        <div className="flex items-center gap-3 text-slate-700">
+                            <Building className="w-5 h-5 text-slate-400" />
                             <span className="font-medium">{contact.company}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-slate-300">
-                            <Mail className="w-5 h-5 text-slate-500" />
+                        <div className="flex items-center gap-3 text-slate-700">
+                            <Mail className="w-5 h-5 text-slate-400" />
                             <span>{contact.email}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-slate-400 text-sm">
+                        <div className="flex items-center gap-3 text-slate-500 text-sm">
                             <Calendar className="w-4 h-4" />
                             <span>{new Date(contact.createdAt).toLocaleString()}</span>
                         </div>
 
-                        <div className="pt-4 border-t border-slate-700">
-                            <div className="flex items-center gap-2 text-sm text-slate-400 mb-2">
+                        <div className="pt-4 border-t border-slate-100">
+                            <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
                                 <FolderIcon className="w-4 h-4" />
                                 <span>フォルダ: {currentFolder}</span>
                             </div>
                             <select
                                 value={contact.folderId}
                                 onChange={(e) => handleMoveFolder(e.target.value)}
-                                className="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-200 text-sm"
+                                className="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 text-sm outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="inbox">Inbox</option>
                                 {folders.map((f) => (
@@ -100,27 +100,27 @@ export default function ContactDetailPage({ params }: { params: { id: string } }
                         </div>
                     </div>
 
-                    <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                        <h3 className="font-bold text-slate-200 mb-4 flex items-center gap-2">
-                            <Send className="w-5 h-5 text-blue-400" />
+                    <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                        <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <Send className="w-5 h-5 text-blue-600" />
                             生成されたメール
                         </h3>
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-xs font-medium text-slate-500 mb-1">件名</label>
-                                <div className="p-3 bg-slate-900 rounded-lg text-slate-200 text-sm">
+                                <div className="p-3 bg-slate-50 rounded-lg text-slate-800 text-sm border border-slate-100">
                                     {contact.generatedEmail.subject}
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-xs font-medium text-slate-500 mb-1">本文</label>
-                                <div className="p-3 bg-slate-900 rounded-lg text-slate-200 text-sm whitespace-pre-wrap leading-relaxed">
+                                <div className="p-3 bg-slate-50 rounded-lg text-slate-800 text-sm whitespace-pre-wrap leading-relaxed border border-slate-100">
                                     {contact.generatedEmail.body}
                                 </div>
                             </div>
                             <button
                                 onClick={handleOpenMailer}
-                                className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20"
+                                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-colors flex items-center justify-center gap-2 shadow-sm"
                             >
                                 <Send className="w-5 h-5" />
                                 メーラー起動
@@ -132,7 +132,7 @@ export default function ContactDetailPage({ params }: { params: { id: string } }
                 {/* Sidebar Info (Image & Context) */}
                 <div className="space-y-6">
                     {contact.imageBase64 && (
-                        <div className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700">
+                        <div className="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm">
                             <img
                                 src={contact.imageBase64}
                                 alt="Business Card"
@@ -141,9 +141,9 @@ export default function ContactDetailPage({ params }: { params: { id: string } }
                         </div>
                     )}
 
-                    <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                        <h3 className="font-bold text-slate-200 mb-3 text-sm">会話メモ</h3>
-                        <p className="text-slate-400 text-sm leading-relaxed">
+                    <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                        <h3 className="font-bold text-slate-800 mb-3 text-sm">会話メモ</h3>
+                        <p className="text-slate-600 text-sm leading-relaxed">
                             {contact.context}
                         </p>
                     </div>

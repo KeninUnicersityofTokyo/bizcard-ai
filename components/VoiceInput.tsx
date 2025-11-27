@@ -80,9 +80,9 @@ export default function VoiceInput({ onContextChange }: VoiceInputProps) {
     };
 
     return (
-        <div className="w-full max-w-md mx-auto p-4 bg-slate-800 rounded-xl shadow-lg border border-slate-700 mt-4">
-            <h2 className="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
-                <Mic className="w-6 h-6 text-blue-400" />
+        <div className="w-full max-w-md mx-auto p-4 bg-white rounded-xl shadow-sm border border-slate-200 mt-4">
+            <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <Mic className="w-6 h-6 text-blue-600" />
                 会話内容を入力
             </h2>
 
@@ -90,8 +90,8 @@ export default function VoiceInput({ onContextChange }: VoiceInputProps) {
                 <button
                     onClick={toggleRecording}
                     className={`w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all ${isRecording
-                        ? "bg-red-500/20 text-red-400 border-2 border-red-500 animate-pulse"
-                        : "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/20"
+                        ? "bg-red-50 text-red-600 border-2 border-red-500 animate-pulse"
+                        : "bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
                         }`}
                 >
                     {isRecording ? (
@@ -109,7 +109,7 @@ export default function VoiceInput({ onContextChange }: VoiceInputProps) {
             </div>
 
             {error && (
-                <div className="mb-4 p-3 bg-red-900/30 border border-red-800 rounded-lg flex items-center gap-2 text-red-300 text-sm">
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-600 text-sm">
                     <AlertCircle className="w-4 h-4" />
                     {error}
                 </div>
@@ -119,7 +119,7 @@ export default function VoiceInput({ onContextChange }: VoiceInputProps) {
                 value={text}
                 onChange={handleTextChange}
                 placeholder="例：渋谷のカフェで面談。サウナの話で盛り上がった。来週資料送る件を伝えて。"
-                className="w-full h-32 p-3 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full h-32 p-3 bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             />
         </div>
     );

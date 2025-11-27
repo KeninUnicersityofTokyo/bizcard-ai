@@ -38,8 +38,8 @@ export default function Sidebar() {
         <Link
             href={href}
             className={`flex items-center justify-between p-3 rounded-lg mb-1 transition-colors ${active
-                ? "bg-blue-600 text-white"
-                : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                ? "bg-blue-50 text-blue-600 font-bold"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                 }`}
             onClick={() => setIsMobileOpen(false)}
         >
@@ -54,7 +54,7 @@ export default function Sidebar() {
                         e.stopPropagation();
                         onDelete();
                     }}
-                    className="p-1 hover:bg-red-500/20 hover:text-red-400 rounded transition-colors"
+                    className="p-1 hover:bg-red-50 hover:text-red-600 rounded transition-colors"
                 >
                     <Trash2 className="w-4 h-4" />
                 </button>
@@ -67,18 +67,21 @@ export default function Sidebar() {
             {/* Mobile Toggle */}
             <button
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
-                className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 rounded-lg text-slate-200 border border-slate-700"
+                className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg text-slate-600 border border-slate-200 shadow-sm"
             >
                 {isMobileOpen ? <X /> : <Menu />}
             </button>
 
             {/* Sidebar Container */}
             <aside
-                className={`fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 lg:translate-x-0 ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
+                className={`fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-slate-200 transform transition-transform duration-300 lg:translate-x-0 ${isMobileOpen ? "translate-x-0" : "-translate-x-full"
                     }`}
             >
                 <div className="p-6">
-                    <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent mb-8">
+                    <h1 className="text-xl font-bold text-blue-600 mb-8 flex items-center gap-2">
+                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                            <Inbox className="w-5 h-5" />
+                        </div>
                         BizCard AI
                     </h1>
 
@@ -91,12 +94,12 @@ export default function Sidebar() {
                         />
 
                         <div className="mt-8 mb-2 flex items-center justify-between px-2">
-                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                                 Folders
                             </span>
                             <button
                                 onClick={() => setIsCreating(true)}
-                                className="text-slate-500 hover:text-blue-400 transition-colors"
+                                className="text-slate-400 hover:text-blue-600 transition-colors"
                             >
                                 <Plus className="w-4 h-4" />
                             </button>
@@ -111,7 +114,7 @@ export default function Sidebar() {
                                     value={newFolderName}
                                     onChange={(e) => setNewFolderName(e.target.value)}
                                     onBlur={() => !newFolderName && setIsCreating(false)}
-                                    className="w-full p-2 bg-slate-800 border border-slate-700 rounded text-sm text-slate-200 focus:border-blue-500 outline-none"
+                                    className="w-full p-2 bg-white border border-slate-200 rounded text-sm text-slate-800 focus:border-blue-500 outline-none"
                                 />
                             </form>
                         )}
@@ -122,7 +125,7 @@ export default function Sidebar() {
                                 href={`/?folderId=${folder.id}`}
                                 icon={FolderIcon}
                                 label={folder.name}
-                                active={false} // We'll handle active state via searchParams in page.tsx effectively, or just simple link highlight
+                                active={pathname.includes(`folderId=${folder.id}`)}
                                 onDelete={() => handleDeleteFolder(folder.id)}
                             />
                         ))}

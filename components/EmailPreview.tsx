@@ -45,58 +45,57 @@ export default function EmailPreview({ initialData, onSave }: EmailPreviewProps)
     };
 
     return (
-        <div className="w-full max-w-md mx-auto p-4 bg-slate-800 rounded-xl shadow-lg border border-slate-700 mt-4">
-            <h2 className="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
-                <Send className="w-6 h-6 text-blue-400" />
-                メール確認・保存
-            </h2>
+        <div className="w-full max-w-md mx-auto bg-white rounded-t-xl shadow-2xl border border-slate-200 overflow-hidden font-sans">
+            {/* Gmail-like Header */}
+            <div className="bg-slate-100 p-3 flex items-center justify-between border-b border-slate-200">
+                <span className="text-sm font-bold text-slate-700">新規メッセージ</span>
+                <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-slate-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-slate-300"></div>
+                </div>
+            </div>
 
-            <div className="space-y-4">
-                <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1">宛先</label>
+            <div className="p-4 space-y-2">
+                {/* To */}
+                <div className="flex items-center border-b border-slate-100 py-2">
+                    <span className="text-slate-500 text-sm w-12">To</span>
                     <input
                         type="email"
                         value={data.email}
                         onChange={(e) => handleChange("email", e.target.value)}
-                        className="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="flex-1 bg-transparent outline-none text-slate-800 text-sm"
+                        placeholder="recipient@example.com"
                     />
                 </div>
 
-                <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1">相手の名前</label>
-                    <input
-                        type="text"
-                        value={data.name}
-                        onChange={(e) => handleChange("name", e.target.value)}
-                        className="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1">件名</label>
+                {/* Subject */}
+                <div className="flex items-center border-b border-slate-100 py-2">
+                    <span className="text-slate-500 text-sm w-12">Subject</span>
                     <input
                         type="text"
                         value={data.subject}
                         onChange={(e) => handleChange("subject", e.target.value)}
-                        className="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none"
+                        className="flex-1 bg-transparent outline-none text-slate-800 font-bold text-sm"
+                        placeholder="件名"
                     />
                 </div>
 
-                <div>
-                    <label className="block text-xs font-medium text-slate-400 mb-1">本文</label>
-                    <textarea
-                        value={data.body}
-                        onChange={(e) => handleChange("body", e.target.value)}
-                        className="w-full h-48 p-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none resize-none text-sm leading-relaxed"
-                    />
-                </div>
+                {/* Body */}
+                <textarea
+                    value={data.body}
+                    onChange={(e) => handleChange("body", e.target.value)}
+                    className="w-full h-64 py-4 bg-transparent outline-none text-slate-800 text-sm leading-relaxed resize-none"
+                    placeholder="本文..."
+                />
+            </div>
 
-                <div className="pt-4 border-t border-slate-700">
-                    <label className="block text-xs font-medium text-slate-400 mb-2">保存先フォルダ</label>
+            {/* Footer Actions */}
+            <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col gap-4">
+                <div className="flex items-center gap-2">
                     <select
                         value={selectedFolderId}
                         onChange={(e) => setSelectedFolderId(e.target.value)}
-                        className="w-full p-2 bg-slate-900 border border-slate-600 rounded-lg text-slate-100 mb-4"
+                        className="flex-1 p-2 bg-white border border-slate-200 rounded text-sm text-slate-700 outline-none"
                     >
                         <option value="inbox">Inbox</option>
                         {folders.map((f) => (
@@ -105,30 +104,33 @@ export default function EmailPreview({ initialData, onSave }: EmailPreviewProps)
                             </option>
                         ))}
                     </select>
+                    <button
+                        onClick={() => onSave(data, selectedFolderId)}
+                        className="p-2 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                        title="保存"
+                    >
+                        <Save className="w-5 h-5" />
+                    </button>
+                </div>
 
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => onSave(data, selectedFolderId)}
-                            className="flex-1 py-3 px-4 bg-green-600 hover:bg-green-500 text-white rounded-xl font-bold transition-colors flex items-center justify-center gap-2"
-                        >
-                            <Save className="w-5 h-5" />
-                            保存
-                        </button>
+                <div className="flex items-center justify-between">
+                    <div className="flex gap-2">
                         <button
                             onClick={handleOpenMailer}
-                            className="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20"
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold text-sm shadow-sm transition-colors flex items-center gap-2"
                         >
-                            <Send className="w-5 h-5" />
-                            メーラー起動
+                            送信
+                            <Send className="w-4 h-4" />
+                        </button>
+                        <button
+                            onClick={handleCopy}
+                            className="p-2 text-slate-500 hover:bg-slate-200 rounded-full transition-colors"
+                            title="コピー"
+                        >
+                            {copied ? <Check className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5" />}
                         </button>
                     </div>
-                    <button
-                        onClick={handleCopy}
-                        className="w-full mt-3 py-2 px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2"
-                    >
-                        {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                        コピー
-                    </button>
+                    <span className="text-xs text-slate-400">BizCard AI</span>
                 </div>
             </div>
         </div>
